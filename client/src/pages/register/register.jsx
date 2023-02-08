@@ -1,5 +1,5 @@
 import React from "react";
-import { Button,Form,Input } from 'antd';
+import { Button,Form,Input,Checkbox } from 'antd';
 import { Link,useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -12,6 +12,7 @@ function Register() {
     const onFinish =async (values) => {
         try {
             dispatch(showLoading());
+            console.log('values',values)
             const response = await axios.post("/api/user/register", values);
             dispatch(hideLoading());
             if (response.data.success) {
@@ -34,7 +35,10 @@ function Register() {
             layout="vertical"    
             onFinish={onFinish}    
            >
-              <Form.Item label="Name" name="name">
+              <Form.Item label="First Name" name="fname">
+                <Input placeholder="Name" />
+              </Form.Item>
+              <Form.Item label="Last Name" name="lname">
                 <Input placeholder="Name" />
               </Form.Item>
               <Form.Item label="Email" name="email">
@@ -42,6 +46,9 @@ function Register() {
               </Form.Item>
               <Form.Item label="Password" name="password">
                 <Input placeholder="Password" type="password" />
+              </Form.Item>
+              <Form.Item name="isDoctor" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+                <Checkbox>Applying as a Doctor</Checkbox>
               </Form.Item>
     
               <Button
