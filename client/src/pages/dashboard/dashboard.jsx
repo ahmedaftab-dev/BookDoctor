@@ -1,5 +1,6 @@
 import React,{useEffect} from "react";
 import axios from "axios";
+import Layout from "../../components/layout/layout";
 
 
 function Dashboard() {
@@ -20,12 +21,9 @@ function Dashboard() {
     getData();
   }, []);
     return (
-        <div className="authentication">
-          <div className="authentication-form card p-3">
-            <h1 className="card-title">Dashboard</h1>
-            
-          </div>
-        </div>
+      <Layout>
+     Home
+    </Layout>
       );
   }
   
