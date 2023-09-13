@@ -5,10 +5,10 @@ import { Toaster } from "react-hot-toast";
 import Login from "./pages/login/login";
 import Register from "./pages/register/register";
 import Dashboard from "./pages/dashboard/dashboard";
-
 import { ProtectedRoute } from "./components/routes/protectedRoutes";
 import { PublicRoute } from "./components/routes/publicRoutes";
 import ApplyDoctor from "./pages/doctor/applyDoctor";
+import Notifications from "./pages/notification/notifactions";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
@@ -32,6 +32,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ApplyDoctor />
+            </ProtectedRoute>
+          }
+        />
+               <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
             </ProtectedRoute>
           }
         />
