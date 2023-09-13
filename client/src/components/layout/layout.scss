@@ -18,6 +18,7 @@
     margin-right: 20px;
     min-height: 100%;
     padding: 10px;
+    transition: width 3s ease;
     .sidebar-header{
         display: flex;
         justify-content: space-between;
@@ -32,6 +33,7 @@
     position: relative;
     left: 31px;
     z-index: 99;
+   
     .header-action-icon{
         font-size: 25px;
         color: black !important;
@@ -56,7 +58,7 @@
     justify-content: space-between;
     width: 100%;
     .notification-profile{
-        float:right
+        margin-left: auto;
     }
 }
 
