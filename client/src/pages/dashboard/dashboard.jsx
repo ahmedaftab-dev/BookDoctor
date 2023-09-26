@@ -8,7 +8,7 @@ function Dashboard() {
     try {
       const response = await axios.post('/api/user/get-user-info-by-id',{}, {
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          Authorization: "Bearer " + localStorage.getItem("sh-token"),
         },
       });
       console.log(response.data)

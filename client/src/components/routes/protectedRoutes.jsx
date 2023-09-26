@@ -15,10 +15,10 @@ export const ProtectedRoute=(props)=> {
       dispatch(showLoading())
       const response = await axios.post(
         "/api/user/get-user-info-by-id",
-        { token: localStorage.getItem("token") },
+        { token: localStorage.getItem("sh-token") },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("sh-token")}`,
           },
         }
       );
@@ -42,7 +42,7 @@ export const ProtectedRoute=(props)=> {
     }
   }, [user]);
 
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem("sh-token")) {
     return props.children;
   } else {
     return <Navigate to="/login" />;
