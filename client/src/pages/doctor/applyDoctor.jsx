@@ -13,6 +13,11 @@ function ApplyDoctor() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const config= {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("sh-token")}`,
+    },
+  }
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
@@ -26,11 +31,7 @@ function ApplyDoctor() {
             moment(values.timings[1]).format("HH:mm"),
           ],
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        config
       );
       dispatch(hideLoading());
       if (response.data.success) {

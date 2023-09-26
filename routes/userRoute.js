@@ -43,7 +43,10 @@ router.post("/register", async (req, res) => {
         });
         res
           .status(200)
-          .send({ message: "Login successful", success: true, data: token });
+          .send({ message: "Login successful", success: true, data:{
+            id:user._id,
+            token:token
+          } });
       }
     } catch(error){
       console.log(error);
@@ -96,5 +99,42 @@ router.post("/register", async (req, res) => {
       res.status(500).send({ message: "Error applying as a doctor", success: false, error });
     }
   })
-
+  router.post('/mark-unseen-as-seen-notifications',authMiddleware,async (req,res)=>{
+   try{
+    const userNotified=await User.findOne({_id:req.body.userId})
+    const unseenNotifications=userNotified.unseenNotifications
+    const seenNotifications=userNotified.seenNotifications
+    seenNotifications.push(...unseenNotifications)
+    userNotified.unseenNotifications=[]
+    userNotified.seenNotifications=seenNotifications
+    const updatedUser=await userNotified.save()
+    updatedUser.password=undefined
+    res.status(200).send({ 
+      message: "All notifications marked as Seen",
+       success: true,
+       data:updatedUser
+       });
+   }
+   catch{
+    console.log(error);
+    res.status(500).send({ message: "Failed to mark notification as seen", success: false, error });
+   }
+  })
+  router.post('/delete-all-notifications',authMiddleware,async (req,res)=>{
+    try{
+     const userNotified=await User.findOne({_id:req.body.userId})
+     userNotified.seenNotifications=[]
+     const updatedUser=await userNotified.save()
+     updatedUser.password=undefined
+     res.status(200).send({ 
+       message: "All notifications have been deleted",
+        success: true,
+        data:updatedUser
+        });
+    }
+    catch{
+     console.log(error);
+     res.status(500).send({ message: "Failed to delete notifications", success: false, error });
+    }
+   })
   module.exports = router;

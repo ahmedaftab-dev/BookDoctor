@@ -13,11 +13,13 @@ function Login() {
    try {
       dispatch(showLoading());
       const response = await axios.post("/api/user/login", values);
+      console.log('login-api',response)
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
         toast("Redirecting to your Dashboard")
-        localStorage.setItem('token',response.data.data)
+        localStorage.setItem('sh-token',response.data.data.token)
+        localStorage.setItem('sh-user-id',response.data.data.id)
         navigate("/dashboard");
       } else {
         dispatch(hideLoading());
