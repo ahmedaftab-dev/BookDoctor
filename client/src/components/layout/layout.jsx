@@ -73,7 +73,7 @@ function Layout({ children }) {
 
   const menuToBeRendered = user?.isAdmin ? adminMenu : user?.isDoctor ? doctorMenu : userMenu;
   const role = user?.isAdmin ? "Admin" : user?.isDoctor ? "Doctor" : "User";
-  const name=user?.fname
+  const name=user?.fname+' '+user?.lname
   return (
     <div className="main">
       <div className="d-flex layout">

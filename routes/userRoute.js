@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
+const Doctor=require("../models/doctorModel")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -72,5 +73,28 @@ router.post("/register", async (req, res) => {
         .send({ message: "Error getting user info", success: false, error });
     }
   });
+  router.post('/apply-doctor',authMiddleware,async(req,res)=>{
+    try {
+      const newDoctor=new Doctor({...req.body,staus:"pending"})
+      await newDoctor.save()
+      const admin=await User.findOne({isAdmin:true})
+      const unseenNotifications=admin.unseenNotifications
+      unseenNotifications.push({
+        type:"new doctor request",
+        message:`${newDoctor.firstName} ${newDoctor.lastName} has applied as a doctor`,
+        data:{
+          doctorID:newDoctor._id,
+          name:newDoctor.firstName+' '+newDoctor.lastName
+        },
+        onClickPath:"/admin/doctors"
+      })
+      await User.findByIdAndUpdate(admin._id,{ unseenNotifications })
+      res.status(200).send({ message: "Applied as a Doctor successfully", success: true });
+    }
+    catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "Error applying as a doctor", success: false, error });
+    }
+  })
 
   module.exports = router;

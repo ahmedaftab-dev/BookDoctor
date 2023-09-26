@@ -16,29 +16,29 @@ function ApplyDoctor() {
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
-      // const response = await axios.post(
-      //   "/api/user/apply-doctor-account",
-      //   {
-      //     ...values,
-      //     userId: user._id,
-      //     timings: [
-      //       moment(values.timings[0]).format("HH:mm"),
-      //       moment(values.timings[1]).format("HH:mm"),
-      //     ],
-      //   },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //     },
-      //   }
-      // );
+      const response = await axios.post(
+        "/api/user/apply-doctor",
+        {
+          ...values,
+          userId: user._id,
+          timings: [
+            moment(values.timings[0]).format("HH:mm"),
+            moment(values.timings[1]).format("HH:mm"),
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       dispatch(hideLoading());
-      // if (response.data.success) {
-      //   toast.success(response.data.message);
+      if (response.data.success) {
+        toast.success(response.data.message);
         navigate("/");
-      // } else {
-      //   toast.error(response.data.message);
-      // }
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
       dispatch(hideLoading());
       toast.error("Something went wrong");
